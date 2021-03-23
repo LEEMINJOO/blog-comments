@@ -16,12 +16,21 @@ jobs:
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+    # - name: Find Comment
+    #   uses: peter-evans/find-comment@v1
+    #   id: fc
+    #   with:
+    #     token: ${{ secrets.MY_GITHUB_TOKEN }}
+    #     issue-number: ${{ github.event.pull_request.number }}
+        # comment-author: 'github-actions[bot]'
+        # body-includes: This comment was written by a bot!
 
     - name: Create comment
       if: steps.fc.outputs.comment-id == ''
       uses: peter-evans/create-or-update-comment@v1
       with:
-        issue-number: ${{ github.event.pull_request.number }}
+        issue-number: 1
+        # issue-number: ${{ github.event.pull_request.number }}
         body: |
           This comment was written by a bot!
         reactions: rocket
