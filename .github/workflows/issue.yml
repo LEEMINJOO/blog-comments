@@ -4,13 +4,12 @@ name: issue
 
 # Controls when the action will run. 
 on:
-  issue_comment: 
-    types: [created]
+  issues: 
+    types: [closed]
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   changeIssueTitle:
-    if: contains(github.event.comment.body, '/close')
     runs-on: ubuntu-latest
 
     steps:
@@ -32,14 +31,3 @@ jobs:
       env:
         MY_GITHUB_TOKEN: ${{ secrets.MY_GITHUB_TOKEN }}
         ISSUE_NUMBER: ${{ github.event.issue.number }}
-
-  closeIssue:
-    if: contains(github.event.comment.body, '/close')
-    runs-on: ubuntu-latest
-
-    steps:
-    - name: Close Issue
-      uses: peter-evans/close-issue@v1
-      with:
-        comment: |
-          Auto-closing this issue.
